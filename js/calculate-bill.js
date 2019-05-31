@@ -6,6 +6,8 @@ var billTotalElement = document.querySelector(".billTotal");
 function calculateBtnClicked(){
     // get the string entered in the textArea
     var billString = billStringField.value;
+    console.log(billString)
+
     //split the string
     var billItems = billString.split(",");
     // a variable for the total phone bill.
