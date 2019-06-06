@@ -8,7 +8,7 @@ var smsTotalSettingElem = document.querySelector(".smsTotalSettings");
 var warningLevelSetting = document.querySelector(".warningLevelSetting");
 var criticalLevelSetting = document.querySelector(".criticalLevelSetting");
 var updateSettings = document.querySelector(".updateSettings");
-var updateSettingsBtn = document.querySelector(".updateSettingsBtn");
+var addBtn = document.querySelector(".addBtn");
 var totalSettingsElem =  document.querySelector(".totalSettings");
 var updateSettngs = document.querySelector(".updateSettngs");
 
@@ -24,7 +24,7 @@ var totalCostSettings = 0;
 function textBillTt(){
  
  // get a reference to the add button
-    if (updateSettingsBtn){
+    if (addBtn){
         var billItemType = document.querySelector("input[name='billItemTypeWithSettings']:checked");
         // billItemType will be 'call' or 'sms'
     console.log(billItemType.value)
@@ -46,7 +46,7 @@ function textBillTt(){
         if (totalCostSettings >= criticalLevel){
             // adding the danger class will make the text red
             totalSettingsElem.classList.add("danger");
-            updateSettingsBtn.disabled = true;
+            addBtn.disabled = true;
         }
         if (totalCostSettings >= warningLevel){
             totalSettingsElem.classList.add("warning");
@@ -57,16 +57,31 @@ function textBillTt(){
 function update(){
     var criticalLevel = criticalLevelSetting.value;
     var warningLevel = warningLevelSetting.value;
+    console.log(warningLevel)
     var call = callTotalSettingElem.value;
     var sms =  smsTotalSettingElem.value;
+    var total = totalSettingsElem.value;
+    console.log(total)
+    var button = addBtn;
 
-    if (updateSettngs){
-        totalSettingsElem.classList.remove('danger'); 
+    if (total < warningLevel ){
+        button.disabled = false;
+       
+    
+    }   
+    if(totalCostSettings < warningLevel ){
+        totalSettingsElem.classList.remove("warning");
+        
     }
+   
+
+    // if (updateSettngs){
+    //     totalSettingsElem.classList.remove('danger'); 
+    // }
     
 }
 
-    updateSettingsBtn.addEventListener('click',textBillTt);
+    addBtn.addEventListener('click',textBillTt);
     updateSettngs.addEventListener('click',update);
 //get a reference to the add button
 
