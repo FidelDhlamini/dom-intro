@@ -73,11 +73,17 @@ function update(){
         totalSettingsElem.classList.remove("warning");
         
     }
+    if(totalCostSettings < criticalLevel){
+        button.disabled = false;
+    }
+    /* if(totalCostSettings < critcalLevel){
+        totalSettingsElem.classList.remove("danger");  
+    } */
    
 
-    // if (updateSettngs){
-    //     totalSettingsElem.classList.remove('danger'); 
-    // }
+     if (updateSettngs){
+       totalSettingsElem.classList.remove('danger'); 
+     }
     
 }
 
