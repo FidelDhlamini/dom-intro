@@ -46,6 +46,7 @@ function textBillTt(){
         if (totalCostSettings >= criticalLevel){
             // adding the danger class will make the text red
             totalSettingsElem.classList.add("danger");
+            
             addBtn.disabled = true;
         }
         if (totalCostSettings >= warningLevel){
@@ -57,11 +58,11 @@ function textBillTt(){
 function update(){
     var criticalLevel = criticalLevelSetting.value;
     var warningLevel = warningLevelSetting.value;
-    console.log(warningLevel)
+    // console.log(warningLevel)
     var call = callTotalSettingElem.value;
     var sms =  smsTotalSettingElem.value;
     var total = totalSettingsElem.value;
-    console.log(total)
+    // console.log(total)
     var button = addBtn;
 
     if (total < warningLevel ){
@@ -69,10 +70,10 @@ function update(){
        
     
     }   
-    if(totalCostSettings < warningLevel ){
-        totalSettingsElem.classList.remove("warning");
+    // if(totalCostSettings < warningLevel ){
+    //     totalSettingsElem.classList.remove("warning");
         
-    }
+    // }
     if(totalCostSettings < criticalLevel){
         button.disabled = false;
     }
@@ -81,8 +82,19 @@ function update(){
     } */
    
 
-     if (updateSettngs){
-       totalSettingsElem.classList.remove('danger'); 
+     if (totalCostSettings < warningLevel){
+    //    totalSettingsElem.classList.add("warning"); 
+       totalSettingsElem.classList.remove("danger");
+ 
+     }
+     else if(criticalLevel < totalCostSettings){
+         totalSettingsElem.classList.remove("warning");
+        //  totalSettingsElem.classList.add("danger");
+     }
+     
+     else {
+        totalSettingsElem.classList.remove("warning");
+        totalSettingsElem.classList.remove("danger");
      }
     
 }
