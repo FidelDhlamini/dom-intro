@@ -2,105 +2,82 @@
 var billItemTypeWithSettings = document.querySelector(".billItemTypeWithSettings");
 var updateSettings = document.querySelector(".updateSettings");
 var callCostSettingElem = document.querySelector(".callCostSetting");
-var smsCostSettinElem = document.querySelector(".smsCostSetting");
+var smsCostSettingElem = document.querySelector(".smsCostSetting");
 var callTotalSettingElem = document.querySelector(".callTotalSettings");
 var smsTotalSettingElem = document.querySelector(".smsTotalSettings");
 var warningLevelSetting = document.querySelector(".warningLevelSetting");
 var criticalLevelSetting = document.querySelector(".criticalLevelSetting");
 var updateSettings = document.querySelector(".updateSettings");
 var addBtn = document.querySelector(".addBtn");
-var totalSettingsElem =  document.querySelector(".totalSettings");
+var totalSettingsElem = document.querySelector(".totalSettings");
 var updateSettngs = document.querySelector(".updateSettngs");
 
-
+var criticalLevel = criticalLevelSetting.value
+var warningLevel = warningLevelSetting.value
+var callSetting = callCostSettingElem.value;
+var smsSetting = smsCostSettingElem.value;
 
 var callsTt = 0;
 var smsTt = 0;
 var totlCost = 0;
-var totalCostSettings = 0;
+var totalCostSettings = smsTt+callsTt;
 
 
 // get refences to all the settings fields
-function textBillTt(){
- 
- // get a reference to the add button
-    if (addBtn){
-        var billItemType = document.querySelector("input[name='billItemTypeWithSettings']:checked");
-        // billItemType will be 'call' or 'sms'
-    console.log(billItemType.value)
-        }
-        if (billItemType.value === "call"){
-            callsTt += Number(callCostSettingElem.value);
-        }
-        else if (billItemType.value === "sms"){
-            smsTt += Number(smsCostSettinElem.value);
-        }
-        console.log(callsTt)
-        callTotalSettingElem.innerHTML = callsTt.toFixed(2);
-        smsTotalSettingElem.innerHTML = smsTt.toFixed(2);
-        var totalCostSettings = callsTt + smsTt;
-        totalSettingsElem.innerHTML = totalCostSettings.toFixed(2);
+function updateBill() {
 
-        var criticalLevel = criticalLevelSetting.value
-        var warningLevel = warningLevelSetting.value
-        if (totalCostSettings >= criticalLevel){
-            // adding the danger class will make the text red
-            totalSettingsElem.classList.add("danger");
-            
-            addBtn.disabled = true;
-        }
-        if (totalCostSettings >= warningLevel){
-            totalSettingsElem.classList.add("warning");
-    
-    }  
-    
+    var billItemType = document.querySelector("input[name='billItemTypeWithSettings']:checked");
+    // billItemType will be 'call' or 'sms'
+    if (billItemType.value === "call") {
+        callsTt += Number(callCostSettingElem.value);
+    } else if (billItemType.value === "sms") {
+        smsTt += Number(smsCostSettingElem.value);
     }
-function update(){
-    var criticalLevel = criticalLevelSetting.value;
-    var warningLevel = warningLevelSetting.value;
-    // console.log(warningLevel)
-    var call = callTotalSettingElem.value;
-    var sms =  smsTotalSettingElem.value;
-    var total = totalSettingsElem.value;
-    // console.log(total)
-    var button = addBtn;
-
-    if (total < warningLevel ){
-        button.disabled = false;
-       
-    
-    }   
-    // if(totalCostSettings < warningLevel ){
-    //     totalSettingsElem.classList.remove("warning");
-        
-    // }
-    if(totalCostSettings < criticalLevel){
-        button.disabled = false;
-    }
-    /* if(totalCostSettings < critcalLevel){
-        totalSettingsElem.classList.remove("danger");  
-    } */
-   
-
-     if (totalCostSettings < warningLevel){
-    //    totalSettingsElem.classList.add("warning"); 
-       totalSettingsElem.classList.remove("danger");
- 
-     }
-     else if(criticalLevel < totalCostSettings){
-         totalSettingsElem.classList.remove("warning");
-        //  totalSettingsElem.classList.add("danger");
-     }
-     
-     else {
-        totalSettingsElem.classList.remove("warning");
-        totalSettingsElem.classList.remove("danger");
-     }
-    
+    // totalCostSettings = callsTt+smsTt;
+    updateTotals();
 }
 
-    addBtn.addEventListener('click',textBillTt);
-    updateSettngs.addEventListener('click',update);
+
+function updateLevels() {
+     criticalLevel = Number(criticalLevelSetting.value);
+     warningLevel = Number(warningLevelSetting.value);
+     updateStyles()
+
+}
+
+
+function updateStyles() {
+    totalSettingsElem.classList.remove("warning");
+    totalSettingsElem.classList.remove("danger");
+
+
+
+    if (totalCostSettings >= warningLevel && totalCostSettings < criticalLevel) {
+        totalSettingsElem.classList.add("warning");
+        addBtn.disabled = false;
+    }
+    if (totalCostSettings >= criticalLevel) {
+        totalSettingsElem.classList.add("danger");
+        addBtn.disabled = true;
+    }
+
+
+
+}
+
+function updateTotals() {
+    callTotalSettingElem.innerHTML = callsTt.toFixed(2);
+    smsTotalSettingElem.innerHTML = smsTt.toFixed(2);
+    totalCostSettings = callsTt + smsTt;
+    totalSettingsElem.innerHTML = totalCostSettings.toFixed(2);
+    updateStyles();
+}
+
+
+
+
+addBtn.addEventListener('click', updateBill);
+updateSettngs.addEventListener('click', updateLevels);
 //get a reference to the add button
 
 //get a reference to the 'Update settings' button
